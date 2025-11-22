@@ -92,6 +92,11 @@ stdenv.mkDerivation {
     cp lute/cli/lute $out/bin
   '';
 
+  doCheck = true;
+  checkPhase = ''
+    ninja tests/lute-tests -v && HOME=$TMPDIR ./tests/lute-tests
+  '';
+
   meta = {
     mainProgram = "lute";
   };
