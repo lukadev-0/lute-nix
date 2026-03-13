@@ -42,6 +42,7 @@ jobs:
       - name: Commit & push
         uses: EndBug/add-and-commit@v9
         with:
-          default_author: github_actions
+          author_name: LukaDev
+          author_email: hi@lukadev.me
           message: "lute: ${{ steps.update.outputs.version }}"
           push: origin HEAD:auto-update --force
