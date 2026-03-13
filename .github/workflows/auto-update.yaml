@@ -1,0 +1,45 @@
+name: Auto update
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run every day at 2:00 UTC
+    - cron "0 2 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-update
+
+jobs:
+  update:
+    name: Update
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          extra_nix_config: |
+            substituters = https://cache.nixos.org https://cache.garnix.io
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=
+
+      - name: Perform auto update
+        id: update
+        run: |
+          nix develop -c update-script
+
+          version="$(nix eval --raw .#lute.version)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Commit & push
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: "lute: ${{ steps.update.outputs.version }}"
+          push: origin auto-update --force

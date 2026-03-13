@@ -1,0 +1,35 @@
+name: Auto update merge
+
+on:
+  check_suite:
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-update
+
+jobs:
+  merge:
+    name: Merge
+    runs-on: ubuntu-24.04
+
+    if: |
+      github.event.check_suite.head_branch == 'auto-update' &&
+      github.event.check_suite.conclusion == 'success'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: auto-update
+          fetch-depth: 2
+
+      - name: Merge and push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git pull --rebase origin main
+          git push origin auto-update:main
