@@ -20,11 +20,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.AUTO_UPDATE_TOKEN }}
 
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          github_access_token: ${{ secrets.AUTO_UPDATE_TOKEN }}
           extra_nix_config: |
             substituters = https://cache.nixos.org https://cache.garnix.io
             trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=
@@ -32,7 +34,7 @@ jobs:
       - name: Perform auto update
         id: update
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.AUTO_UPDATE_TOKEN }}
         run: |
           nix develop -c update-script
 
@@ -42,7 +44,6 @@ jobs:
       - name: Commit & push
         uses: EndBug/add-and-commit@v9
         with:
-          author_name: LukaDev
-          author_email: hi@lukadev.me
+          default_author: github_actions
           message: "lute: ${{ steps.update.outputs.version }}"
           push: origin HEAD:auto-update --force
