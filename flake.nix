@@ -4,9 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     systems.url = "github:nix-systems/default";
-
-    lute-src.url = "github:luau-lang/lute";
-    lute-src.flake = false;
   };
 
   outputs =
@@ -14,7 +11,6 @@
       self,
       nixpkgs,
       systems,
-      lute-src,
     }:
     let
       inherit (nixpkgs) lib;
@@ -27,7 +23,31 @@
         system:
         import self {
           pkgs = nixpkgs.legacyPackages.${system};
-          inherit lute-src;
+        }
+      );
+
+      overlays.default = import ./overlay.nix;
+
+      devShells = eachSystem (
+        system:
+        let
+          pkgs = import nixpkgs {
+            overlays = [ self.overlays.default ];
+            inherit system;
+          };
+
+          update-script = pkgs.writeShellScriptBin "update-script" ''
+            exec lute ${./update.luau} "$@"
+          '';
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              pkgs.lute
+              pkgs.nix-prefetch-git
+              update-script
+            ];
+          };
         }
       );
     };
