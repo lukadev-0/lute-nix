@@ -41,6 +41,8 @@ jobs:
           version="$(nix eval --raw .#lute.version)"
           echo "version=$version" >> "$GITHUB_OUTPUT"
 
+          nix flake update
+
       - name: Commit & push
         uses: EndBug/add-and-commit@v9
         with:
