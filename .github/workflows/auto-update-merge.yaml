@@ -29,7 +29,7 @@ jobs:
       - name: Fetch additional commits
         run: |
           git fetch --shallow-exclude=main origin auto-update
-          git fetch --depth=1 origin main
+          git fetch --deepen=1 origin auto-update
 
       - name: Merge and push
         run: |
