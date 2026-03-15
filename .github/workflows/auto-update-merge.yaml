@@ -24,7 +24,12 @@ jobs:
         uses: actions/checkout@v5
         with:
           ref: auto-update
-          fetch-depth: 2
+          fetch-depth: 1
+
+      - name: Fetch additional commits
+        run: |
+          git fetch --shallow-exclude=main origin auto-update
+          git fetch --depth=1 origin main
 
       - name: Merge and push
         run: |
