@@ -11,7 +11,7 @@ local PKG_NAME = "lute"
 local PKG_FILE = "lute.nix"
 
 local github_token: string? = process.env.GH_TOKEN
-local pkg_file_contents = fs.readfiletostring(PKG_FILE)
+local pkg_file_contents = fs.readFileToString(PKG_FILE)
 
 local function string_escape_pattern(s: string)
 	return (string.gsub(s, "[%%%.%(%)%*%+%?%-%^%$]", "%%%0"))
@@ -136,4 +136,4 @@ new_pkg_file_contents = string_replace(new_pkg_file_contents, current_version, l
 new_pkg_file_contents = string_replace(new_pkg_file_contents, current_src_hash, new_src_hash)
 new_pkg_file_contents = string_replace(new_pkg_file_contents, current_pkg.tune.outputHash, tune_hash)
 
-fs.writestringtofile(PKG_FILE, new_pkg_file_contents)
+fs.writeStringToFile(PKG_FILE, new_pkg_file_contents)
