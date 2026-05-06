@@ -11,12 +11,12 @@
   perl,
   git,
   pkg-config,
-  tuneHash ? "sha256-h6ftnn1dCU+p9lRs8TE86E0q5/U/qkpsRdxGPChzRDU=",
+  tuneHash ? "sha256-ZjHKnT15Sy402TmqPyh42O0qiyKWFL65a+fxk0LqXB0=",
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "lute";
-  version = "v1.0.1-nightly.20260502";
+  version = "v1.0.1-nightly.20260506";
 
   nativeBuildInputs = [
     cmake
@@ -30,7 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "luau-lang";
     repo = "lute";
     tag = finalAttrs.version;
-    hash = "sha256-8wC13RsIy44beVdCjG9INfluJ1czBjXUsRbvTlpipqE=";
+    hash = "sha256-r6ngV2nkdUWP2CPwsLq1fhMF4Xa+CztJotA7NsYNzEY=";
   };
 
   tune =
