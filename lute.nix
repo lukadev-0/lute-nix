@@ -16,7 +16,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "lute";
-  version = "v1.0.1-nightly.20260507";
+  version = "v1.0.1-nightly.20260508";
 
   nativeBuildInputs = [
     cmake
@@ -30,7 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "luau-lang";
     repo = "lute";
     tag = finalAttrs.version;
-    hash = "sha256-gQwv5qbEjHtikpkA2VrAWjY2A7xVqeG5hBjZAs0deK0=";
+    hash = "sha256-9zValHEAOebHM5wkmuN2hqwclFRhWEaM1q6Xt58Wo3Q=";
   };
 
   tune =
