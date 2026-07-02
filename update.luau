@@ -46,7 +46,7 @@ local github_request_headers = {
 	Authorization = github_token and `Bearer {github_token}`,
 	["User-Agent"] = "lute-nix",
 	["X-GitHub-Api-Version"] = "2026-03-10",
-}
+} :: { [string]: string }
 
 local current_pkg = json.deserialize(command_output({
 	"nix",
@@ -78,7 +78,7 @@ local function fetch_latest_version()
 		error(`response failed with {response.status}`)
 	end
 	local data = json.deserialize(response.body) :: any
-	return data[1].tag_name
+	return (string.gsub(data[1].tag_name, "^v", ""))
 end
 
 local latest_version = fetch_latest_version()
