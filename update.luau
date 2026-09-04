@@ -96,7 +96,7 @@ local new_src_hash: string = (json.deserialize(command_output({
 	"--url",
 	`https://github.com/{repo}`,
 	"--rev",
-	latest_version,
+	`v{latest_version}`,
 	"--name",
 	"source",
 })) :: any).hash
