@@ -11,17 +11,17 @@
   perl,
   git,
   pkg-config,
-  tuneHash ? "sha256-cGx4c02iOs0ccAmtl1spbkp57HDmVAP/PYC8gHVdasU=",
+  tuneHash ? "sha256-IxDdvOeGJ0vxqSrnEDmdqDOjPqTTd52FGVJI7mhvyoU=",
 }:
 let
   baseAttrs = finalAttrs: {
-    version = "1.0.1-nightly.20260701";
+    version = "1.0.1-nightly.20261017";
 
     src = fetchFromGitHub {
       owner = "luau-lang";
       repo = "lute";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-X7NJtzOdPWQazqirL5zD5Ua0wnuADySHRFsAxGSTWxk=";
+      hash = "sha256-mQLTc2fyrq2ZXbyDguY6DYqgW5vYJ+VwDXNDSZDAGLs=";
     };
 
     tune =
